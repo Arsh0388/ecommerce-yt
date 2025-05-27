@@ -1,23 +1,36 @@
 import { Outlet, Link } from "react-router-dom";
+import './Layout.css';
 
 const Layout = () => {
     return (
         <>
-            <nav>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
+            <nav className="navbar">
+                <ul className="nav-list">
+                    <li className="nav-item brand">
+                        <Link to="/">Edmonton Bazaar</Link>
                     </li>
-                    <li>
-                        <Link to="login-signup">Login / Signup</Link> {/* ✅ Fix path */}
-                    </li>
+                    <div className="nav-main-links">
+                        <li className="nav-item"><a href="#news">News</a></li>
+                        <li className="nav-item"><a href="#contact">Contact</a></li>
+                        <li className="nav-item"><a href="#about">About</a></li>
+                    </div>
+                    <div className="nav-actions">
+                        <div className="search-group">
+                            <input type="text" placeholder="Search..." className="search-input" />
+                            <button className="search-button">🔍</button>
+                        </div>
+                        <button className="nav-btn">❤️</button>
+                        <button className="nav-btn">🛒</button>
+                        <button className="nav-btn">👤</button>
+                    </div>
                 </ul>
             </nav>
 
-            {/* 🔽 This renders child route components like <Home />, <Login_Form />, etc. */}
-            <Outlet />
+            <main className="content">
+                <Outlet />
+            </main>
         </>
-    )
-}
+    );
+};
 
 export default Layout;
