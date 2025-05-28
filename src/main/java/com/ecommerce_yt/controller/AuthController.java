@@ -1,9 +1,11 @@
 package com.ecommerce_yt.controller;
 
 import com.ecommerce_yt.Model.User;
+import com.ecommerce_yt.Model.VerificationCode;
 import com.ecommerce_yt.Service.AuthService;
 import com.ecommerce_yt.domain.USER_ROLE;
 import com.ecommerce_yt.repository.UserRepository;
+import com.ecommerce_yt.response.ApiResponse;
 import com.ecommerce_yt.response.AuthResponse;
 import com.ecommerce_yt.response.SignupRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +26,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/signup")
-    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req){
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req) throws Exception {
         //       User user = new User();
         //       user.setEmail(req.getEmail());
         //       user.setFullName(req.getFullName()); // this won't save it in our Database
@@ -58,4 +60,14 @@ public class AuthController {
        return ResponseEntity.ok(res);
 
     }
+
+//    @PostMapping("/sent/login-signup-otp")
+//    public ResponseEntity<ApiResponse> sentOtpHandler(@RequestBody VerificationCode req) throws Exception {
+//
+//
+//    }
+
+
 }
+
+

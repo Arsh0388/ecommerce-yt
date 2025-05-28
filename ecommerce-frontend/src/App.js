@@ -13,9 +13,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<Layout />} >
                         <Route index element={<Home />} />
-                        <Route path="login-signup" element={<Login_Form />} />
                         <Route path="*" element={<NoPage />} />
+                        <Route path="/login-signup" element={<Login_Form />} />
                     </Route>
+
                 </Routes>
             </BrowserRouter>
         </div>

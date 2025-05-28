@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface AuthService {
-
-    String createUser(SignupRequest signupRequest);
+    void sendLoginOtp(String email) throws Exception;
+    String createUser(SignupRequest signupRequest) throws Exception;
 }

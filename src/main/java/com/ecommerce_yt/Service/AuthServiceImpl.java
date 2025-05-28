@@ -2,11 +2,14 @@ package com.ecommerce_yt.Service;
 
 import com.ecommerce_yt.Model.Cart;
 import com.ecommerce_yt.Model.User;
+import com.ecommerce_yt.Model.VerificationCode;
 import com.ecommerce_yt.config.JWTProvider;
 import com.ecommerce_yt.domain.USER_ROLE;
 import com.ecommerce_yt.repository.CartRepository;
 import com.ecommerce_yt.repository.UserRepository;
+import com.ecommerce_yt.repository.VerificationCodeRepository;
 import com.ecommerce_yt.response.SignupRequest;
+import com.ecommerce_yt.utils.OtpUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 
 @Service
@@ -27,9 +31,47 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final CartRepository cartRepository;
     private final JWTProvider jwtProvider;
-    @Override
-    public String createUser(SignupRequest req) {
+    private final VerificationCodeRepository verificationCodeRepository;
+    private final EmailService emailService;
 
+    @Override
+    public void sendLoginOtp(String email) throws Exception {
+        // otp will be send to the user.
+        String SIGNING_PREFIX = "signin_";
+
+        if (email.startsWith(SIGNING_PREFIX)) {
+            email = email.substring(SIGNING_PREFIX.length());
+
+            User user = userRepository.findByEmail(email);
+            if (user == null) {
+                throw new Exception("user not exist with provided email");
+            }
+        }
+
+        VerificationCode isExist = verificationCodeRepository.findByEmail(email);
+        if (isExist!=null) {
+            verificationCodeRepository.delete(isExist); // create new verification code
+        }
+        String otp = OtpUtil.generateOtp();
+        VerificationCode verificationCode = new VerificationCode();
+        verificationCode.setOtp(otp);
+        verificationCode.setEmail(email);
+        verificationCodeRepository.save(verificationCode);
+
+        // send email to the user.
+        String subject = "zosh bazaar login/signup otp";
+
+        String text = "yout login/signup otp is ";
+        emailService.sendVerificationOtpEmail(email,otp,subject,text);
+    }
+
+    @Override
+    public String createUser(SignupRequest req) throws Exception {
+
+        VerificationCode verificationCode = verificationCodeRepository.findByEmail(req.getEmail());
+        if (verificationCode == null || !verificationCode.getOtp().equals(req.getOtp())) {
+            throw new Exception("wrong otp...");
+        }
         // check if the  user already exists with the provided email
         User user = userRepository.findByEmail(req.getEmail());
 

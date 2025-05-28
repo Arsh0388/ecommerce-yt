@@ -21,7 +21,7 @@ const Layout = () => {
                         </div>
                         <button className="nav-btn">❤️</button>
                         <button className="nav-btn">🛒</button>
-                        <button className="nav-btn">👤</button>
+                        <Link className="nav-btn" to = "/login-signup" >👤</Link>
                     </div>
                 </ul>
             </nav>
