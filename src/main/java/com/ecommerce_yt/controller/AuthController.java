@@ -1,7 +1,7 @@
 package com.ecommerce_yt.controller;
 
+import com.ecommerce_yt.Model.LoginVerification;
 import com.ecommerce_yt.Model.User;
-import com.ecommerce_yt.Model.VerificationCode;
 import com.ecommerce_yt.Service.AuthService;
 import com.ecommerce_yt.domain.USER_ROLE;
 import com.ecommerce_yt.repository.UserRepository;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -27,6 +29,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req) throws Exception {
+
+
         //       User user = new User();
         //       user.setEmail(req.getEmail());
         //       user.setFullName(req.getFullName()); // this won't save it in our Database
@@ -60,12 +64,29 @@ public class AuthController {
        return ResponseEntity.ok(res);
 
     }
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse> loginHandler(@RequestBody LoginVerification req) {
 
-//    @PostMapping("/sent/login-signup-otp")
-//    public ResponseEntity<ApiResponse> sentOtpHandler(@RequestBody VerificationCode req) throws Exception {
-//
-//
-//    }
+        User user = userRepository.findByEmail(req.getEmail());
+        ApiResponse res = new ApiResponse();
+        if (user == null) {
+            System.out.println("user not found");
+            res.setMessage("User not found");
+            return ResponseEntity.status(404).body(res);
+        }
+        if (!user.getPassword().equals(req.getPassword())) {
+            System.out.println("Password Mismatch");
+            res.setMessage("Password Mismatch");
+            return ResponseEntity.status(401).body(res);
+        }
+
+        // create the jwt session for the user .
+        res.setMessage("Login successful");
+        System.out.println("Login successful");
+        return ResponseEntity.ok(res);
+    }
+
+
 
 
 }
