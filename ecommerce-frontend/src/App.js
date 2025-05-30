@@ -5,6 +5,8 @@ import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import NoPage from "./pages/NoPage";
 import Login_Form from "./pages/Login_Form";
+import Signup_Form from "./pages/Signup_Form";
+import Otp_Verification from "./pages/Otp_Verification";
 
 function App() {
     return (
@@ -15,6 +17,8 @@ function App() {
                         <Route index element={<Home />} />
                         <Route path="*" element={<NoPage />} />
                         <Route path="/login-signup" element={<Login_Form />} />
+                        <Route path = "signup" element = {<Signup_Form />} />
+                        <Route path = "Otp_Verification" element = {<Otp_Verification />} />
                     </Route>
 
                 </Routes>

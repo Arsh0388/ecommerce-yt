@@ -1,17 +1,22 @@
 package com.ecommerce_yt.Model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "login_verification")
+@Table(name = "otp_verification")
 @Data
 public class LoginVerification {
 
     @Id
-    private String email; // or another unique ID field
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private String password; // or any other fields you need
+    private String email;
+    private String fullName;
+    private String password; // Should be hashed if stored here temporarily
+    private String otp;
+    private LocalDateTime expiryTime;
 }

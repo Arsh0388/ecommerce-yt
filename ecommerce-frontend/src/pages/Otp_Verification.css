@@ -1,0 +1,50 @@
+.otp-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f5f5f5;
+    padding: 1rem;
+}
+
+.otp-box {
+    background-color: #ffffff;
+    padding: 3rem 3.5rem; /* Increased padding */
+    border-radius: 16px; /* Slightly more rounded corners */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Increased max-width */
+    text-align: center;
+}
+
+.otp-heading {
+    font-size: 2rem; /* Increased font size */
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.otp-form input[type="text"] {
+    width: 100%;
+    padding: 1rem; /* Bigger padding for input */
+    margin-bottom: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+}
+
+.otp-form button {
+    width: 100%;
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.otp-form button:hover {
+    background-color: #0056b3;
+}

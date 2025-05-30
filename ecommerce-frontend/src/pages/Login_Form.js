@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, Link } from "react-router-dom";
 import "./Login_form.css";
 import {useState} from "react"
 
@@ -61,7 +61,7 @@ const Login_Form = () => {
 
                 <div className="login-footer">
                     <a href="#">Forgot Password?</a>
-                    <a href="#">Create Account</a>
+                    <Link to="/signup">Create Account</Link>
                 </div>
             </div>
         </div>
